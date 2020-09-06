@@ -42,8 +42,6 @@ class TodoController extends Controller
         //print_r ($request);
         //return $request;
         return redirect('/');
-
-
     }
 
     /**
@@ -61,7 +59,6 @@ class TodoController extends Controller
             //echo $todo->title;
         //}
         return view ('todoshow')->with('tableshow', $todos);
-
     }
 
     /**
@@ -87,6 +84,7 @@ class TodoController extends Controller
     {
         //echo $request->title;
         $todo->title=$request->title;
+        $todo->check_box = $request->boolean('check_box');
         $todo->save();
         return redirect('/');
     }

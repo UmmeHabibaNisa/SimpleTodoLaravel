@@ -6,8 +6,7 @@
 
 <form method="post" action="storetodo">
 {{ csrf_field() }}
-  <input type="checkbox" name="check_box" aria-label="Checkbox for following text input">
-  <input type="text" id="title" name="title" placeholder="Make your own list..."><br><br>
+   <input type="text" id="title" name="title" placeholder="Make your own list..."><br><br>
   <input type="submit" value="Add">
 </form> 
 </body>
