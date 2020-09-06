@@ -37,11 +37,12 @@ class TodoController extends Controller
     {
         $todo = new Todo;
         $todo->title = $request->title;
-        $todo->check_box = $request->boolean('check_box');
+        $todo->check_box = 0;
         $todo->save();
         //print_r ($request);
         //return $request;
-        return redirect('/');
+        return json_encode($todo);
+        //return redirect('/');
     }
 
     /**
@@ -51,14 +52,13 @@ class TodoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Todo $todo)
-    {   
+    {
         $todos = Todo::all();
         //print_r($todos);
-
-        //foreach ($todos as $todo) {
-            //echo $todo->title;
-        //}
-        return view ('todoshow')->with('tableshow', $todos);
+       // foreach ($todos as $todo) {
+           //echo $todo;
+       // }
+        return view('todoshow')->with('tableshow', $todos);
     }
 
     /**
@@ -69,8 +69,7 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-         return view('todoedit')->with('showtables',$todo);
-
+        return view('todoedit')->with('showtables', $todo);
     }
 
     /**
@@ -83,7 +82,7 @@ class TodoController extends Controller
     public function update(Request $request, Todo $todo)
     {
         //echo $request->title;
-        $todo->title=$request->title;
+        $todo->title = $request->title;
         $todo->check_box = $request->boolean('check_box');
         $todo->save();
         return redirect('/');
@@ -100,6 +99,15 @@ class TodoController extends Controller
         //echo $todo;
         $todo->delete();
         return redirect('/');
+    }
+
+    public function checkBox(Request $request)
+    {
+        $post = Todo::find($request->id);
+        $post->check_box = $request->check_box;
+        $post->save();
+        return ($request);
+        //$todo->check_box = $request->boolean('check_box');
 
     }
 }

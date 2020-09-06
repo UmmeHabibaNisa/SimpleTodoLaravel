@@ -22,6 +22,7 @@ Route::post('storetodo', 'TodoController@store') ;
 Route::get('edit/{todo}', 'TodoController@edit') ;
 Route::post('update/{todo}', 'TodoController@update') ;
 Route::get('delete/{todo}', 'TodoController@destroy') ;
+Route::post('checkbox', 'TodoController@checkBox') ;
 
 
 
