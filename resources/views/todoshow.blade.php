@@ -1,3 +1,5 @@
+
+@extends('layouts.app')
 <!DOCTYPE html>
 <html>
 
@@ -13,41 +15,35 @@
 </head>
 
 <body>
-
-
-  <h2>Make your list... ^_^</h2>
-
-
-  <input type="text" id="title" name="title" placeholder="Make your own list..."><br><br>
-  <input type="submit" onclick="view()" value="Add">
+<h1>Make @section('header')@endsection</h1>
+  <//input type="text" id="title" class="form-control" name="title" placeholder="Make your own list..."><br><br>
+  <input type="submit" onclick="view()" value="Add"><br> <br>
 
   <h2>Your List..</h2><br>
-  <table id="todotable" style="width:100%">
+  <table class="table "  >
+  <thead class="thead-dark">
     <tr>
-      <th>Number</th>
-      <th>Title</th>
-      <th>Completed</th>
-      <th>Buttons</th>
+      <th scope="col">Number</th>
+      <th scope="col">Title</th>
+      <th scope="col">Task Status</th>
+      <th scope="col">Buttons</th>
     </tr>
-
-
-    @foreach ($tableshow as $tableshows)
+  </thead>
+  @foreach ($tableshow as $tableshows)
+  <tbody>
     <tr>
       <td>{{ $tableshows->id }}</td>
       <td>{{ $tableshows->title }}</td>
-      <td>
-        <input name="check_box" type="checkbox" id="{{ $tableshows->id }}" onclick="myFunction('{{ $tableshows->id }}')" @if( $tableshows->check_box == 1 ) checked @endif>
-      </td>
-      <td>
+      <td><input name="check_box" type="checkbox" id="{{ $tableshows->id }}" onclick="myFunction('{{ $tableshows->id }}')" @if( $tableshows->check_box == 1 ) checked @endif>
+</td>
+     <td> <a href="/edit/{{$tableshows->id}}">Edit </a>
+        <a href="/delete/{{$tableshows->id}}">DElete </a></td>
+  </tbody>
+  @endforeach
+</table>
+  <script  src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"   ></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-        <a href="/edit/{{$tableshows->id}}">Edit </a>
-        <a href="/delete/{{$tableshows->id}}">DElete </a>
-
-      </td>
-    </tr>
-    @endforeach
-  </table>
-  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
   <script>
     function myFunction(id) {
       //alert (id);
@@ -56,7 +52,14 @@
       if (document.getElementById(id).checked == true) {
         alert("You have Completed The Task");
       } else {
-        alert("Task Incomplete");
+        var txt;
+        if(confirm("Task Incomplete")){
+          txt ="ok";
+        }
+        else {
+          txt = "Cancel";
+        }
+        document.getElementById(id).innerHTML = txt;
       }
       $.ajax({
         type: "POST",
