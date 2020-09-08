@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', function () {
     //return view('welcome');
 //});
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
 Route::get('/', 'TodoController@show') ;
 Route::get('addnew', 'TodoController@create') ;
 Route::post('storetodo', 'TodoController@store') ;
@@ -23,6 +27,7 @@ Route::get('edit/{todo}', 'TodoController@edit') ;
 Route::post('update/{todo}', 'TodoController@update') ;
 Route::get('delete/{todo}', 'TodoController@destroy') ;
 Route::post('checkbox', 'TodoController@checkBox') ;
+
 
 
 
